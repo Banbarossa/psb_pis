@@ -1,10 +1,39 @@
+@push('mystyle')
+<style>
+    .steps{
+        position: relative;
+        margin-bottom: 40px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+    .step{
+        border-radius:50%;
+        border: none;
+        height:50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        z-index: 100
+
+    }
+    .progress-bar{
+        position: absolute;
+        top: 35%;
+        z-index: 1
+        
+    }
+
+</style>
+@endpush
+
+
 <div>
     <div class="container-fluid">
-        <div class="page-header min-height-200 border-radius-xl mt-4"
-            style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
-            <span class="mask bg-gradient-primary opacity-6"></span>
-        </div>
-        <div class="card card-body blur shadow-blur mx-4 mt-n6">
+        <x-page-header></x-page-header>
+
+        <x-student-page-title>
             <div class="row gx-4">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
@@ -120,7 +149,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+
+        </x-student-page-title>
     </div>
 
     <div class="container-fluid py-4">
@@ -151,63 +182,27 @@
                     </div>
                 @endif
 
-                <form wire:submit.prevent="save" action="#" method="POST" role="form text-left">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user-name" class="form-control-label">{{ __('Full Name') }}</label>
-                                <div class="@error('user.name')border border-danger rounded-3 @enderror">
-                                    <input wire:model="user.name" class="form-control" type="text" placeholder="Name"
-                                        id="user-name">
-                                </div>
-                                @error('user.name') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user-email" class="form-control-label">{{ __('Email') }}</label>
-                                <div class="@error('user.email')border border-danger rounded-3 @enderror">
-                                    <input wire:model="user.email" class="form-control" type="email"
-                                        placeholder="@example.com" id="user-email">
-                                </div>
-                                @error('user.email') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
+                
+                <div class="steps position-relative">
+                    <div class="d-flex justify-content-between">
+                        <div class="step btn btn-circle {{ $currentStep >= 1 ?'alert-primary':'alert-secondary'}}"><span class="text-white fw-bold">1</span></div>
+                        <div class="step btn btn-circle {{ $currentStep >= 2 ?'alert-primary':'alert-secondary'}}"><span class="text-white fw-bold">2</span></div>
+                        <div class="step btn btn-circle {{ $currentStep >= 3 ?'alert-primary':'alert-secondary'}}"><span class="text-white fw-bold">3</span></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user.phone" class="form-control-label">{{ __('Phone') }}</label>
-                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input wire:model="user.phone" class="form-control" type="tel"
-                                        placeholder="40770888444" id="phone">
-                                </div>
-                                @error('user.phone') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user.location" class="form-control-label">{{ __('Location') }}</label>
-                                <div class="@error('user.location') border border-danger rounded-3 @enderror">
-                                    <input wire:model="user.location" class="form-control" type="text"
-                                        placeholder="Location" id="name">
-                                </div>
-                                @error('user.location') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
+                    <div class="progress-bar {{$progress}}" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
                     </div>
-                    <div class="form-group">
-                        <label for="about">{{ 'About Me' }}</label>
-                        <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                            <textarea wire:model="user.about" class="form-control" id="about" rows="3"
-                                placeholder="Say something about yourself"></textarea>
-                        </div>
-                        @error('user.about') <div class="text-danger">{{ $message }}</div> @enderror
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
-                    </div>
-                </form>
+                    
+
+                </div>
+
+                @if ($currentStep == 1)
+
+                <livewire:student.student-profile-step1/>
+                
+                @elseif ($currentStep == 2)
+                <livewire:student.student-profile-step2/>
+
+                @endif
 
             </div>
         </div>

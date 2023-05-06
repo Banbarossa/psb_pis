@@ -97,6 +97,15 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="d-flex flex-column h-100">
+                    @if (!Auth::guard('registration')->user()->register_payment_status)
+                    <p class="mb-1 pt-2 text-bold">Selamat Datang</p>
+                    <h5 class="font-weight-bolder text-primary">{{Auth::user()->name}}</h5>
+                    <p class="mb-5 text-danger">Anda belum melakukan pembayaran biaya Formulir Sebesar Rp 300.000</p>
+                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
+                      Bayar Sekarang
+                      <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                    </a>
+                    @else
                     <p class="mb-1 pt-2 text-bold">Selamat Datang</p>
                     <h5 class="font-weight-bolder text-primary">{{Auth::user()->name}}</h5>
                     <p class="mb-5">Silahkan Lengkapi data calon santri untuk melanjutkan proses pendaftaran</p>
@@ -104,6 +113,8 @@
                       Lengkapi Sekarang
                       <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
                     </a>
+                    @endif
+                    
                   </div>
                 </div>
                 <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">

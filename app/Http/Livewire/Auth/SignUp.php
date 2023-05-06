@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Auth;
 
 use Livewire\Component;
-use App\Models\User;
+use App\Models\Registration;
 use Illuminate\Support\Facades\Hash;
 
 class SignUp extends Component
@@ -19,14 +19,14 @@ class SignUp extends Component
     ];
 
     public function mount() {
-        if(auth()->user()){
+        if(auth()->guard('registration')->user()){
             redirect('/dashboard');
         }
     }
 
     public function register() {
         $this->validate();
-        $user = User::create([
+        $user = Registration::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password)

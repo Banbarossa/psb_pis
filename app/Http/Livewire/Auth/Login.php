@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Auth;
 
-use Livewire\Component;
 use App\Models\User;
+use Livewire\Component;
+use App\Models\Registration;
+use Illuminate\Support\Facades\Auth;
 
 class Login extends Component
 {
@@ -25,9 +27,10 @@ class Login extends Component
 
     public function login() {
         $credentials = $this->validate();
-        if(auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember_me)) {
-            $user = User::where(["email" => $this->email])->first();
-            auth()->login($user, $this->remember_me);
+        if(Auth::guard('registration')->attempt(['email' => $this->email, 'password' => $this->password], $this->remember_me)) {
+            $user = Registration::where(["email" => $this->email])->first();
+            Auth::guard('registration')->login($user, $this->remember_me);
+            // dd ('suceess');
             return redirect()->intended('/dashboard');        
         }
         else{

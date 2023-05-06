@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Livewire\LaravelExamples;
-use App\Models\User;
+use App\Models\Registration;
 
 use Livewire\Component;
 
 class UserProfile extends Component
 {
-    public User $user;
+    public Registration $user;
     public $showSuccesNotification  = false;
 
     public $showDemoNotification = false;
@@ -21,7 +21,7 @@ class UserProfile extends Component
     ];
 
     public function mount() { 
-        $this->user = auth()->user();
+        $this->user = auth()->guard('registration')->user();
     }
 
     public function save() {
